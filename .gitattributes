@@ -16,6 +16,7 @@
 *.jsp           eol=lf
 *.jspf          eol=lf
 *.jspx          eol=lf
+*.jsx           eol=lf
 *.properties    eol=lf
 *.sh            eol=lf
 *.tld           eol=lf
