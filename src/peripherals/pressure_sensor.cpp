@@ -4,11 +4,14 @@
 
 float previousPressure;
 float currentPressure;
+int pressureCounter;
 #if defined SINGLE_BOARD
   ADS1015 ADS(0x48);
 #else
   ADS1115 ADS(0x48);
 #endif
+
+#define STUCK_PRESSURE_THRESHOLD 100
 
 void pressureSensorInit() {
   ADS.begin();
@@ -31,6 +34,19 @@ float getPressure() {  //returns sensor pressure data
   #else
     currentPressure = (ADS.getValue() - 2666) / 1777.8f; // 16bit
   #endif
+
+  if (currentPressure == previousPressure) {
+    pressureCounter++;
+    if (pressureCounter > STUCK_PRESSURE_THRESHOLD) {
+      lcdShowPopup("Recovering ADS!");
+      pressureSensorInit();
+      pressureCounter = 0;
+    }
+  }
+  else {
+    pressureCounter = 0;
+  }
+
   return currentPressure;
 }
 

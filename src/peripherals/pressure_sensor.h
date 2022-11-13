@@ -2,6 +2,7 @@
 #define PRESURE_SENSSOR_H
 
 #include <Arduino.h>
+#include "lcd/lcd.h"
 
 void    pressureSensorInit(void);
 float   getPressure(void);
